@@ -1,4 +1,3 @@
-```markdown
 # Pluggit PluggEasy Modbus Integration for Home Assistant
 
 This repository provides a **Modbus configuration** for Pluggit PluggEasy (ASPV/ASPH) ventilation units and **template sensors** to display numeric registers as human-readable strings in Home Assistant.
