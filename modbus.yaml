@@ -1,0 +1,415 @@
+- name: "pluggeasy"
+  type: serial
+  method: rtu
+  port: /dev/serial/by-id/usb-1a86_USB_Single_Serial_58B5038694-if00
+  baudrate: 19200
+  stopbits: 1
+  bytesize: 8
+  parity: E
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 1) BINARY SENSORS  (Discrete Inputs 100xx)
+  # ─────────────────────────────────────────────────────────────────────────
+  binary_sensors:
+    - name: "Active Alarms"
+      unique_id: "pluggeasy_active_alarms"
+      address: 0
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Filter Alarm"
+      unique_id: "pluggeasy_filter_alarm"
+      address: 1
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Extract Air Sensor Fault"
+      unique_id: "pluggeasy_extract_air_sensor_fault"
+      address: 6
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Exhaust Air Sensor Fault"
+      unique_id: "pluggeasy_exhaust_air_sensor_fault"
+      address: 7
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Outdoor Air Sensor Fault"
+      unique_id: "pluggeasy_outdoor_air_sensor_fault"
+      address: 8
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Supply Air Sensor Fault"
+      unique_id: "pluggeasy_supply_air_sensor_fault"
+      address: 9
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Extract Air Fan Fault"
+      unique_id: "pluggeasy_extract_air_fan_fault"
+      address: 10
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Supply Air Fan Fault"
+      unique_id: "pluggeasy_supply_air_fan_fault"
+      address: 11
+      input_type: discrete_input
+      device_class: problem
+      slave: 1
+
+    - name: "Automatic Bypass Active"
+      unique_id: "pluggeasy_automatic_bypass_active"
+      address: 15
+      input_type: discrete_input
+      device_class: running
+      slave: 1
+
+    - name: "Boost Contact Active"
+      unique_id: "pluggeasy_boost_contact_active"
+      address: 28
+      input_type: discrete_input
+      device_class: running
+      slave: 1
+
+    - name: "Boost Mode Active"
+      unique_id: "pluggeasy_boost_mode_active"
+      address: 29
+      input_type: discrete_input
+      device_class: running
+      slave: 1
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 2) SWITCHES → Coils
+  # ─────────────────────────────────────────────────────────────────────────
+  switches:
+    - name: "Reset Filter Alarm"
+      unique_id: "pluggeasy_reset_filter_alarm"
+      address: 0
+      write_type: coil
+      slave: 1
+
+    - name: "Manual Bypass"
+      unique_id: "pluggeasy_manual_bypass"
+      address: 7
+      write_type: coil
+      slave: 1
+
+    - name: "Allow Automatic Bypass"
+      unique_id: "pluggeasy_allow_automatic_bypass"
+      address: 8
+      write_type: coil
+      slave: 1
+
+    - name: "Summer Mode"
+      unique_id: "pluggeasy_summer_mode"
+      address: 9
+      write_type: coil
+      slave: 1
+
+    - name: "Manual Boost"
+      unique_id: "pluggeasy_manual_boost"
+      address: 16
+      write_type: coil
+      slave: 1
+
+    - name: "Snooze Mode (Unit Stops for 1h)"
+      unique_id: "pluggeasy_snooze_mode"
+      address: 17
+      write_type: coil
+      slave: 1
+
+    - name: "Working Mode"
+      unique_id: "pluggeasy_working_mode_coil"
+      address: 25
+      write_type: coil
+      slave: 1
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 3) SENSORS → Input & Holding Registers
+  # ─────────────────────────────────────────────────────────────────────────
+  sensors:
+    ########################################################################
+    #   INPUT REGISTERS (300xx)  → read-only
+    ########################################################################
+    - name: "Communication Error"
+      unique_id: "pluggeasy_communication_error"
+      address: 4
+      input_type: input
+      data_type: int16
+      slave: 1
+
+    - name: "Defrost Status"
+      unique_id: "pluggeasy_defrost_status"
+      address: 5
+      input_type: input
+      data_type: int16
+      slave: 1
+
+    - name: "Extract Air Temperature"
+      unique_id: "pluggeasy_extract_air_temperature"
+      address: 25
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      slave: 1
+
+    - name: "Exhaust Air Temperature"
+      unique_id: "pluggeasy_exhaust_air_temperature"
+      address: 26
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      slave: 1
+
+    - name: "Outdoor Air Temperature"
+      unique_id: "pluggeasy_outdoor_air_temperature"
+      address: 27
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      slave: 1
+
+    - name: "Supply Air Temperature"
+      unique_id: "pluggeasy_supply_air_temperature"
+      address: 28
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      slave: 1
+
+    - name: "Relative Humidity Extract Air"
+      unique_id: "pluggeasy_rh_extract_air"
+      address: 29
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "%"
+      device_class: humidity
+      state_class: measurement
+      slave: 1
+
+    - name: "Relative Humidity Exhaust Air"
+      unique_id: "pluggeasy_rh_exhaust_air"
+      address: 30
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "%"
+      device_class: humidity
+      state_class: measurement
+      slave: 1
+
+    - name: "Relative Humidity Outdoor Air"
+      unique_id: "pluggeasy_rh_outdoor_air"
+      address: 31
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "%"
+      device_class: humidity
+      state_class: measurement
+      slave: 1
+
+    - name: "Relative Humidity Supply Air"
+      unique_id: "pluggeasy_rh_supply_air"
+      address: 32
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "%"
+      device_class: humidity
+      state_class: measurement
+      slave: 1
+
+    - name: "Control Voltage Extract Motor"
+      unique_id: "pluggeasy_voltage_extract_motor"
+      address: 59
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      slave: 1
+
+    - name: "Control Voltage Supply Motor"
+      unique_id: "pluggeasy_voltage_supply_motor"
+      address: 60
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      slave: 1
+
+    - name: "RPM Extract Motor"
+      unique_id: "pluggeasy_rpm_extract_motor"
+      address: 61
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "rpm"
+      state_class: measurement
+      slave: 1
+
+    - name: "RPM Supply Motor"
+      unique_id: "pluggeasy_rpm_supply_motor"
+      address: 62
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "rpm"
+      state_class: measurement
+      slave: 1
+
+    - name: "Bypass Damper Position"
+      unique_id: "pluggeasy_bypass_damper_position"
+      address: 63
+      input_type: input
+      data_type: int16
+      slave: 1
+
+    - name: "Actual Working Mode"
+      unique_id: "pluggeasy_actual_working_mode"
+      address: 90
+      input_type: input
+      data_type: int16
+      slave: 1
+
+    ########################################################################
+    #   HOLDING REGISTERS (400xx) → read/write
+    ########################################################################
+    - name: "Bypass Min Outdoor Temperature"
+      unique_id: "pluggeasy_bypass_min_outdoor_temp"
+      address: 63
+      input_type: holding
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      slave: 1
+
+    - name: "Bypass Min Extract Temperature"
+      unique_id: "pluggeasy_bypass_min_extract_temp"
+      address: 65
+      input_type: holding
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      slave: 1
+
+    - name: "Bypass Min Extract-Outdoor Difference"
+      unique_id: "pluggeasy_bypass_min_extract_outdoor_diff"
+      address: 67
+      input_type: holding
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      slave: 1
+
+    - name: "Selected Airflow"
+      unique_id: "pluggeasy_selected_airflow"
+      address: 132
+      input_type: holding
+      data_type: int16
+      slave: 1
+
+    - name: "Manual By-Pass Timer"
+      unique_id: "pluggeasy_manual_bypass_timer"
+      address: 56
+      input_type: holding
+      data_type: int16
+      slave: 1
+
+    # --- Geräteuhr (40049..40054) ---
+    # - name: "Clock Day"
+    #   unique_id: "pluggeasy_clock_day"
+    #   address: 48
+    #   input_type: holding
+    #   data_type: int16
+    #   slave: 1
+
+    # - name: "Clock Month"
+    #   unique_id: "pluggeasy_clock_month"
+    #   address: 49
+    #   input_type: holding
+    #   data_type: int16
+    #   slave: 1
+
+    # - name: "Clock Year"
+    #   unique_id: "pluggeasy_clock_year"
+    #   address: 50
+    #   input_type: holding
+    #   data_type: int16
+    #   slave: 1
+
+    # - name: "Clock Hour"
+    #   unique_id: "pluggeasy_clock_hour"
+    #   address: 51
+    #   input_type: holding
+    #   data_type: int16
+    #   slave: 1
+
+    # - name: "Clock Minutes"
+    #   unique_id: "pluggeasy_clock_minutes"
+    #   address: 52
+    #   input_type: holding
+    #   data_type: int16
+    #   slave: 1
+
+    # - name: "Clock Seconds"
+    #   unique_id: "pluggeasy_clock_seconds"
+    #   address: 53
+    #   input_type: holding
+    #   data_type: int16
+    #   slave: 1
+
+    # --- Modbus-Grundeinstellungen (40001..40003) ---
+    - name: "Modbus Slave Address"
+      unique_id: "pluggeasy_modbus_slave_address"
+      address: 0
+      input_type: holding
+      data_type: int16
+      slave: 1
+
+    - name: "Modbus Baudrate"
+      unique_id: "pluggeasy_modbus_baudrate"
+      address: 1
+      input_type: holding
+      data_type: int16
+      slave: 1
+
+    - name: "Modbus Parity"
+      unique_id: "pluggeasy_modbus_parity"
+      address: 2
+      input_type: holding
+      data_type: int16
+      slave: 1

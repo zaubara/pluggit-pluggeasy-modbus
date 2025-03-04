@@ -1,0 +1,55 @@
+sensor:
+  # Actual Working Mode (register 30091 → sensor.actual_working_mode)
+  - name: "Actual Working Mode Text"
+    state: >
+      {% set value = states('sensor.actual_working_mode')|int(-1) %}
+      {% set modes = {
+        0: "Snooze mode",
+        1: "Low speed",
+        2: "Medium speed",
+        3: "High speed",
+        4: "Boost",
+        5: "Auto mode (humidity sensor)",
+        6: "Auto mode (VOC sensor)",
+        7: "Auto mode (0-10V control)",
+        8: "Boost in auto mode",
+        9: "Weekly program 1",
+        10: "Weekly program 2",
+        11: "Weekly program 3",
+        12: "Weekly program 4"
+      } %}
+      {{ modes.get(value, "Unknown") }}
+
+  # Bypass Damper Position (register 30064 → sensor.bypass_damper_position)
+  - name: "Bypass Damper Position Text"
+    state: >
+      {% set value = states('sensor.bypass_damper_position')|int(-1) %}
+      {% set bypass_map = {
+        0: "Closed",
+        1: "Open",
+        2: "Error"
+      } %}
+      {{ bypass_map.get(value, "Unknown") }}
+
+  # Defrost Status (register 30006 → sensor.defrost_status)
+  - name: "Defrost Status Text"
+    state: >
+      {% set value = states('sensor.defrost_status')|int(-1) %}
+      {% set defrost_map = {
+        0: "Not active",
+        1: "Active (fireplace defrost)",
+        2: "Active (with pre-heater)",
+        3: "Active (unbalanced airflows)"
+      } %}
+      {{ defrost_map.get(value, "Unknown") }}
+
+  # Communication Error (register 30005 → sensor.communication_error)
+  - name: "Communication Error Text"
+    state: >
+      {% set value = states('sensor.communication_error')|int(-1) %}
+      {% set error_map = {
+        0: "No error",
+        1: "Remote controller",
+        4: "Modbus RTU"
+      } %}
+      {{ error_map.get(value, "Unknown") }}
