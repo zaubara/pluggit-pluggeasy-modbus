@@ -297,6 +297,9 @@
       address: 81
       input_type: input
       data_type: int16
+      unit_of_measurement: "ppm"
+      device_class: volatile_organic_compounds_parts
+      state_class: measurement
       slave: 1
 
     - name: "Actual Working Mode"
