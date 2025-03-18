@@ -292,6 +292,13 @@
       data_type: int16
       slave: 1
 
+    - name: "VOC"
+      unique_id: "pluggeasy_voc"
+      address: 81
+      input_type: input
+      data_type: int16
+      slave: 1
+
     - name: "Actual Working Mode"
       unique_id: "pluggeasy_actual_working_mode"
       address: 90
